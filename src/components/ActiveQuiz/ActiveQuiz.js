@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './ActiveQuiz.module.css'
-import AnswersList from '../AnswersList/AnswersList'
+import AnswersList from './AnswersList/AnswersList'
 
 const ActiveQuiz = props => (
     <div className={classes.ActiveQuiz}>

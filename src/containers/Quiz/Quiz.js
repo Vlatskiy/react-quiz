@@ -81,7 +81,7 @@ class Quiz extends Component {
         }
     }
 
-    isQuizFinished() {
+    isQuizFinished = () => {
         return this.state.activeQuestion + 1 === this.state.quiz.length
     }
 
