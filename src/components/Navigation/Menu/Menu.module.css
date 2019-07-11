@@ -1,4 +1,4 @@
-.Drawer {
+.Menu {
     position: fixed;
     left:0;
     top:0;
@@ -13,21 +13,21 @@
     z-index:90;
 }
 
-.Drawer.close {
+.Menu.close {
     transform:translateX(-300px);
 }
 
-.Drawer ul {
+.Menu ul {
     list-style:none;
     margin:0;
     padding: 0;
 }
 
-.Drawer ul li {
+.Menu ul li {
     margin-bottom:15px;
 }
 
-.Drawer ul li a {
+.Menu ul li a {
     color:#363d54;
     font-size: 30px;
     text-decoration: none;
@@ -37,6 +37,6 @@
     transition: opacity .3ms;
 }
 
-.Drawer ul li a:hover, .active {
+.Menu ul li a:hover, .active {
     opacity: .7;
 }

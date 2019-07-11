@@ -6,7 +6,7 @@ const Button = props => {
     classes.Button,
     classes[props.type]
   ]
-
+  
   return (
     <button
       onClick={props.onClick}

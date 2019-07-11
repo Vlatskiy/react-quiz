@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import classes from './Drawer.module.css'
+import classes from './Menu.module.css'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import {NavLink} from 'react-router-dom'
 
@@ -9,7 +9,7 @@ const links = [
     {to: '/quiz-creator', label: 'Создать тест', exact: false}
 ]
 
-class Drawer extends Component {
+class Menu extends Component {
 
     renderLinks () {
         return links.map((link, index) => {
@@ -29,7 +29,7 @@ class Drawer extends Component {
     }
 
     render() {
-        const cls = [classes.Drawer]
+        const cls = [classes.Menu]
 
         if (!this.props.isOpen) {
             cls.push(classes.close)
@@ -48,4 +48,4 @@ class Drawer extends Component {
     }
 }
 
-export default Drawer
+export default Menu
