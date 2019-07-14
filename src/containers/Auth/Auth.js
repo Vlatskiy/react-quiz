@@ -7,6 +7,7 @@ import is from 'is_js'
 export default class Auth extends Component {
 
     state = {
+        isFromValid: false,
         formControls: {
             email: {
                 value: '',
@@ -78,8 +79,14 @@ export default class Auth extends Component {
 
         formControls[controlName] = control //Присвоение локальной копии измененных значений
 
+        let isFormValid = true
+
+        Object.keys(formControls).forEach(name => {
+            isFormValid = formControls[name].valid && isFormValid
+        })
+
         this.setState({
-            formControls
+            formControls, isFormValid
         })
 
     }
@@ -115,12 +122,14 @@ export default class Auth extends Component {
                         <Button 
                             type="success"
                             onClick={this.loginHandler}
+                            disabled={!this.isFromValid}
                         >
                             Войти
                         </Button>
                         <Button 
                             type="primary"
                             onClick={this.registerHandler}
+                            disabled={!this.isFromValid}
                         >
                             Зарегистрироваться
                         </Button>
