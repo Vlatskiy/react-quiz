@@ -35,6 +35,7 @@ class Quiz extends Component {
         ]
     }
 
+    // Обработчик клика на вариант ответа в тесте
     onAnswerClickHandler = answerId => {
         //Проверка state для исключения двойного клика
         if (this.state.answerState) {
@@ -58,6 +59,7 @@ class Quiz extends Component {
                 results
             })
             
+            // Задержка перед переходом к следующему вопросу
             const timeout = window.setTimeout(() => {
                 if(this.isQuizFinished()){
                     this.setState({
@@ -81,10 +83,12 @@ class Quiz extends Component {
         }
     }
 
+    // Функция проверки окончания теста
     isQuizFinished = () => {
         return this.state.activeQuestion + 1 === this.state.quiz.length
     }
 
+    // Функция возвращающая State к первоначальным значениям 
     retryHandler = () => {
         this.setState({
             activeQuestion: 0,
@@ -106,11 +110,13 @@ class Quiz extends Component {
 
                     {
                         this.state.isFinished 
+                        // Тест окончен -> рендер компонента с итогами
                         ?   <FinishedQuiz
                                 results={this.state.results}
                                 quiz={this.state.quiz}
                                 onRetry={this.retryHandler}
                             />
+                        // Тест не окончен -> рендер компонента с вопросами
                         :   <ActiveQuiz 
                                 answers={this.state.quiz[this.state.activeQuestion].answers}
                                 question={this.state.quiz[this.state.activeQuestion].question}

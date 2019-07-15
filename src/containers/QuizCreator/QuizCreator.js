@@ -4,8 +4,9 @@ import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import Select from '../../components/UI/Select/Select'
 import {createControl, validateInput, validateForm} from '../../form/formFramework'
+import axios from 'axios'
 
-/* Функция для создания опций контролов */
+// Функция для создания опций контролов
 function createOptionControl (number) {
     return createControl({
         label: `Вариант ${number}`,
@@ -73,9 +74,20 @@ export default class QuizCreator extends Component {
         })
     }
 
-    createQuizHandler = event => {
+    createQuizHandler = async event => {
         event.preventDefault()
-        console.log(this.state.quiz)
+
+        try {
+            await axios.post('https://react-quiz-4fa41.firebaseio.com/quizes.json', this.state.quiz)
+            this.setState({
+                quiz:[],
+                isFormValid: false,
+                rightAnswerId: 1,
+                formControls: createFormControls()
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     changeHandler = (value, controlName) => {
@@ -108,13 +120,14 @@ export default class QuizCreator extends Component {
                         touched={control.touched}
                         errorMessage={control.errorMessage}
                         onChange={event => this.changeHandler(event.target.value, controlName)}
-                        />
+                    />
                         { index === 0 ? <hr /> : null }
                 </React.Fragment>
             )
         })
     }
 
+    // Выбор правильного вариванта ответа
     selectChangeHandler = event => {
         this.setState({
             rightAnswerId: +event.target.value
@@ -122,7 +135,6 @@ export default class QuizCreator extends Component {
     }
 
     render() {
-
         return (
             <div className={classes.QuizCreator}>
                 <div>

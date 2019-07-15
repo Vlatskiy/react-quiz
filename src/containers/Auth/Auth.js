@@ -39,9 +39,11 @@ export default class Auth extends Component {
     loginHandler = () => {
         
     }
+
     registerHandler = () => {
 
     }
+    
     submitHandler = (event) => {
         event.preventDefault()
     }
@@ -69,6 +71,10 @@ export default class Auth extends Component {
 
         return isValid
     }
+
+    /*
+        Функция изменения State, вызываемая на изменения в Input
+    */
     onChangeHandler = (event,controlName) => {
         const formControls = { ...this.state.formControls } // Копия state для исключения мутации
         const control = { ...formControls[controlName]}
@@ -77,7 +83,7 @@ export default class Auth extends Component {
         control.touched = true
         control.valid = this.validateControl(control.value, control.validation) // Валидация input
 
-        formControls[controlName] = control //Присвоение локальной копии измененных значений
+        formControls[controlName] = control // Присвоение локальной копии измененных значений
 
         let isFormValid = true
 
@@ -90,9 +96,13 @@ export default class Auth extends Component {
         })
 
     }
+
+    /* 
+        Функция создания Input со свойствами из State
+    */
     renderInputs = () => {
         return Object.keys(this.state.formControls).map((controlName, index) => {
-            const control = this.state.formControls[controlName]
+            const control = this.state.formControls[controlName] // Объект с контролом 
             return (
                 <Input
                     key={controlName + index}
