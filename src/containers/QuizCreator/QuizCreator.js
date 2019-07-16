@@ -33,7 +33,6 @@ function createFormControls() {
   }
 
 export default class QuizCreator extends Component {
-
     state= {
         quiz:[],
         isFormValid: false,
@@ -45,6 +44,7 @@ export default class QuizCreator extends Component {
         event.preventDefault()
     }
 
+    // Добавление теста в State при клике на кнопку 'Добавить вопрос'
     addQuestionHandler = event => {
         event.preventDefault()
         
@@ -74,6 +74,7 @@ export default class QuizCreator extends Component {
         })
     }
 
+    // Отправка теста в базу данных при клике на кнопку 'Создать вопрос'
     createQuizHandler = async event => {
         event.preventDefault()
 
@@ -90,6 +91,10 @@ export default class QuizCreator extends Component {
         }
     }
 
+    /*
+        Обработка события на Input
+        Валидация ввёденного значения
+    */
     changeHandler = (value, controlName) => {
         const formControls = { ...this.state.formControls } // Копия state для исключения мутации
         const control = { ...formControls[controlName] }
@@ -106,6 +111,10 @@ export default class QuizCreator extends Component {
         })
     }
 
+    /*
+        Перебор объекта с контролами и конфигурациями.
+        Возвращает Input с набором свойств.
+    */ 
     renderControls = () => {
         return Object.keys(this.state.formControls).map((controlName, index) => {
             const control = this.state.formControls[controlName]

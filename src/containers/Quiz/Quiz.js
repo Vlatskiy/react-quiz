@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import classes from './Quiz.module.css'
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz'
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz'
+import axios from '../../axios/axios-quiz'
+import Loader from '../../components/UI/Loader/Loader'
 
 class Quiz extends Component {
     state = {
@@ -9,30 +11,8 @@ class Quiz extends Component {
         isFinished:false,
         activeQuestion: 0,
         answerState: null, // {[id] : success-error}
-        quiz: [
-            {
-                id: 1,
-                question: 'Какого цвета небо?',
-                rightAnswerId: 2,
-                answers: [
-                    {text:'Желтое', id: 1},
-                    {text:'Синее', id: 2},
-                    {text:'Красное', id: 3},
-                    {text:'Черное', id: 4}
-                ]
-            },
-            {
-                id: 2,
-                question: 'В каком году основали Санкт-Петербург?',
-                rightAnswerId: 3,
-                answers: [
-                    {text:'1700', id: 1},
-                    {text:'1706', id: 2},
-                    {text:'1703', id: 3},
-                    {text:'1710', id: 4}
-                ]
-            },
-        ]
+        quiz: [],
+        loading: true
     }
 
     // Обработчик клика на вариант ответа в тесте
@@ -98,8 +78,19 @@ class Quiz extends Component {
         })
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         console.log(this.props)
+        try {
+            const response = await axios.get(`/quizes/${this.props.match.params.id}.json`)
+            const quiz = response.data
+
+            this.setState({
+                quiz,
+                loading:false
+            })
+        } catch(e) {
+
+        }
     }
 
     render(){
@@ -108,26 +99,25 @@ class Quiz extends Component {
                 <div className={classes.QuizWrapper}>
                     <h1>Ответьте на все вопросы</h1>
 
-                    {
-                        this.state.isFinished 
-                        // Тест окончен -> рендер компонента с итогами
-                        ?   <FinishedQuiz
-                                results={this.state.results}
-                                quiz={this.state.quiz}
-                                onRetry={this.retryHandler}
-                            />
-                        // Тест не окончен -> рендер компонента с вопросами
-                        :   <ActiveQuiz 
-                                answers={this.state.quiz[this.state.activeQuestion].answers}
-                                question={this.state.quiz[this.state.activeQuestion].question}
-                                onAnswerClick={this.onAnswerClickHandler}
-                                quizLength={this.state.quiz.length}
-                                answerNumber={this.state.activeQuestion + 1}
-                                state={this.state.answerState}
-                            />
-
+                    { this.state.loading 
+                        ? <Loader />
+                        :   this.state.isFinished 
+                            // Тест окончен -> рендер компонента с итогами
+                            ?   <FinishedQuiz
+                                    results={this.state.results}
+                                    quiz={this.state.quiz}
+                                    onRetry={this.retryHandler}
+                                />
+                            // Тест не окончен -> рендер компонента с вопросами
+                            :   <ActiveQuiz 
+                                    answers={this.state.quiz[this.state.activeQuestion].answers}
+                                    question={this.state.quiz[this.state.activeQuestion].question}
+                                    onAnswerClick={this.onAnswerClickHandler}
+                                    quizLength={this.state.quiz.length}
+                                    answerNumber={this.state.activeQuestion + 1}
+                                    state={this.state.answerState}
+                                />
                     }
-
                 </div>
             </div>
         )
