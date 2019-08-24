@@ -15,8 +15,8 @@
 ## Ветки проекта
 
 В данном приложении две ветки.
-*master - React приложение без Redux
-*redux-quiz - React приложение перенесенное на Redux 
+* master - React приложение без Redux
+* redux-quiz - React приложение перенесенное на Redux 
 
 ## Скрипты
 
